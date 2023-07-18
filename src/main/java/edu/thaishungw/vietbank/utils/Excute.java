@@ -1,0 +1,47 @@
+package edu.thaishungw.vietbank.utils;
+
+import okhttp3.*;
+import okio.Buffer;
+
+import java.io.IOException;
+
+import edu.thaishungw.vietbank.models.HttpRequest;
+import edu.thaishungw.vietbank.models.HttpResponse;
+
+public class Excute {
+    OkHttpClient client = new OkHttpClient();
+
+    public HttpResponse sendToMoMo(String endpoint, String payload) {
+
+        try {
+
+            HttpRequest httpRequest = new HttpRequest("POST", endpoint, payload, "application/json");
+
+            Request request = createRequest(httpRequest);
+
+            Response result = client.newCall(request).execute();
+            HttpResponse response = new HttpResponse(result.code(), result.body().string(), result.headers());
+
+            return response;
+        } catch (Exception e) {
+
+        }
+
+        return null;
+    }
+
+    public static Request createRequest(HttpRequest request) {
+        RequestBody body = RequestBody.create(MediaType.get(request.getContentType()), request.getPayload());
+        return new Request.Builder()
+                .method(request.getMethod(), body)
+                .url(request.getEndpoint())
+                .build();
+    }
+
+    public String getBodyAsString(Request request) throws IOException {
+        Buffer buffer = new Buffer();
+        RequestBody body = request.body();
+        body.writeTo(buffer);
+        return buffer.readUtf8();
+    }
+}

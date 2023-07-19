@@ -22,9 +22,6 @@
                 </p>
   
                 <form
-                  onSubmit={submitHandler}
-                  action="#"
-                  method="POST"
                   class="mt-8"
                   autoComplete="true"
                 >
@@ -37,7 +34,7 @@
                         <input
                           type="email"
                           name=""
-                          id=""
+                          id="email"
                           placeholder="Nhập địa chỉ email"
                           class="block w-full p-4 text-black placeholder-gray-500 transition-all 
                           duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none 
@@ -64,7 +61,7 @@
                         <input
                           type="password"
                           name=""
-                          id=""
+                          id="password"
                           placeholder="Nhập mật khẩu"
                           class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 border border-gray-200 rounded-md bg-gray-50 focus:outline-none focus:border-blue-600 focus:bg-white caret-blue-600"
 
@@ -74,7 +71,8 @@
   
                     <div>
                       <button
-                        type="submit"
+                        type="button"
+                        onclick="login()"
                         class="inline-flex items-center justify-center w-full px-4 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md focus:outline-none hover:bg-blue-700 focus:bg-blue-700"
                       >
                         Đăng nhập
@@ -131,12 +129,17 @@
   
                 <div class="w-full max-w-md mx-auto xl:max-w-xl">
                   <h3 class="text-2xl font-bold text-center text-black">
-                    NLH - Ecommerce Website
+                    Tài Khoản Demo
                   </h3>
-                  <p class="leading-relaxed text-center text-gray-500 mt-2.5">
-                    Chất lượng thay lời nói
+                  <p class="leading-relaxed text-center text-red-500  mt-2.5">
+                    Tài khoản demo!
                   </p>
-  
+                  <p class="leading-relaxed text-center text-gray-500 mt-2.5">
+                    email : 19110221@student.hcmute.edu.vn
+                  </p>
+                  <p class="leading-relaxed text-center text-gray-500 mt-2.5">
+                   password: 123456
+                  </p>
                   <div class="flex items-center justify-center mt-10 space-x-3">
                     <div class="bg-gray-200 rounded-full w-12 h-1.5"></div>
                     <div class="bg-orange-500 rounded-full w-20 h-1.5"></div>
@@ -150,4 +153,37 @@
         </section>
       </div>
 </body>
+<script>
+  function login() {
+      var email = document.getElementById('email').value;
+      var password = document.getElementById('password').value;
+ 
+      var data = {
+          email: email,
+          password: password
+      };
+      fetch('/login', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+      })
+      .then(response => {
+          if (response.ok) {
+
+              // Đăng nhập thành công, redirect đến trang home hoặc xử lý thông tin
+              window.location.href = '/';
+              alert("Đăng nhập thành công! ")
+          } else {
+              // Xử lý lỗi đăng nhập nếu cần
+  
+              alert("Sai thông tin đăng nhập! Tài khoản demo bên phải! ")
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+  }
+</script>
 </html>

@@ -72,6 +72,10 @@ public class ResponseObject {
         this.amount = amount;
     }
 
+    public ResponseObject() {
+
+    }
+
     public ResponseObject(String resultCode, String message, String payUrl, String deeplink, String qrCodeUrl,
             String requestId, String orderId, long amount) {
         this.resultCode = resultCode;
